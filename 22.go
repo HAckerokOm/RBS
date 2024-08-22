@@ -14,8 +14,8 @@ import (
 )
 
 func main() {
-	inputFile, outputDir := parseFlags()
-	startTime := time.Now()
+	inputFile, outputDir := parseFlags() 
+	startTime := time.Now() // время начала программы
 	fmt.Println("Программа выполняется...")
 
 	processInputFile(*inputFile, *outputDir)
@@ -38,13 +38,13 @@ func isValidURL(url string) bool {
 func fetchHTML(url string) ([]byte, error) {
 	resp, err := http.Get(url)
 	if err != nil {
-		return nil, fmt.Errorf("error fetching %s: %v", url, err)
+		return nil, fmt.Errorf("Ошибка получения %s: %v", url, err)
 	}
 	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, fmt.Errorf("error reading body of %s: %v", url, err)
+		return nil, fmt.Errorf("ошибка чтения %s: %v", url, err)
 	}
 
 	return body, nil
@@ -53,6 +53,7 @@ func fetchHTML(url string) ([]byte, error) {
 func parseFlags() (*string, *string) {
 	inputFile := flag.String("input", "./url.txt", "Путь к файлу с URL-адресами")
 	outputDir := flag.String("output", "./output", "Путь к директории для сохранения HTML-файлов")
+	flag.PrintDefaults() 
 	flag.Parse()
 	setupOutputDir(*outputDir)
 	return inputFile, outputDir
@@ -81,13 +82,11 @@ func processInputFile(filePath string, outputDir string) {
 		url = strings.TrimSpace(url)
 		if url != "" {
 			if isValidURL(url) {
-				fmt.Printf("Valid URL: %s\n", url)
+				fmt.Printf("валидная ссылка: %s\n", url)
 				wg.Add(1)
-				go func(i int) { // Используем замыкание для передачи копии i в горутину
-					processURL(url, &wg, i, outputDir)
-				}(i)
+				go processURL(url, &wg, i, outputDir)
 			} else {
-				fmt.Printf("Invalid URL: %s\n", url)
+				fmt.Printf("невалидная ссылка: %s\n", url)
 			}
 		}
 	}
