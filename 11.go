@@ -13,7 +13,7 @@ import (
 )
 
 func isValidURL(url string) bool {
-	resp, err := http.Head(url)// Отправляет HTTP HEAD запрос к указанному URL.
+	resp, err := http.Head(url) // Отправляет HTTP HEAD запрос к указанному URL.
 	if err != nil {
 		return false
 	}
@@ -22,7 +22,7 @@ func isValidURL(url string) bool {
 	return resp.StatusCode == http.StatusOK
 }
 
-func fetchHTML(url string) ([]byte, error) {// Извлекает HTML содержимое из указанного URL.
+func fetchHTML(url string) ([]byte, error) { // Извлекает HTML содержимое из указанного URL.
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, fmt.Errorf("error fetching %s: %v", url, err)
@@ -61,7 +61,7 @@ func main() {
 	}
 	defer file.Close()
 
-	scanner := bufio.NewScanner(file)\\чтение файла построчно
+	scanner := bufio.NewScanner(file) //чтение файла построчно
 	var validUrls []string
 	for scanner.Scan() {
 		lineStr := scanner.Text()
