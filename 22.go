@@ -28,7 +28,7 @@ func main() {
 func fetchHTML(url string) ([]byte, error) {// Функция для получения HTML-кода страницы по URL
 	resp, err := http.Get(url)
 	if err != nil {
-		return nil, fmt.Errorf("Ошибка получения %s: %v", url, err)// Возвращение ошибки, если запрос к URL не удался
+		return nil, fmt.Errorf("ошибка получения %s: %v", url, err)// Возвращение ошибки, если запрос к URL не удался
 	}
 	defer resp.Body.Close()
 
@@ -62,7 +62,7 @@ func parseFlags() (*string, *string) {// Функция для разбора ф
 func setupOutputDir(dirPath string) {// Функция для создания директории для вывода, если она еще не существует
 	err := os.MkdirAll(dirPath, os.ModePerm)
 	if err != nil {
-		fmt.Println("Ошибка создания директории", err)// Вывод сообщения об ошибке и выход из программы при возникновении
+		fmt.Println("ошибка создания директории", err)// Вывод сообщения об ошибке и выход из программы при возникновении
 		os.Exit(1)
 	}
 }
@@ -93,7 +93,7 @@ func processInputFile(filePath string, outputDir string) {// Функция дл
 	}
 
 	if err := scanner.Err(); err != nil {
-		fmt.Println("Ошибка чтения файла:", err)// Вывод сообщения об ошибке сканирования файла и выход из программы
+		fmt.Println("ошибка чтения файла:", err)// Вывод сообщения об ошибке сканирования файла и выход из программы
 		os.Exit(1)
 	}
 
@@ -106,7 +106,7 @@ func processURL(url string, wg *sync.WaitGroup, i int, outputDir string) {
 	fmt.Printf("Горутина для %s начата\n", url)
 	html, err := fetchHTML(url)
 	if err != nil {
-		fmt.Printf("Ошибка получения HTML для %s: %v\n", url, err)// Вывод сообщения об ошибке получения HTML и возврат из функции
+		fmt.Printf("ошибка получения HTML для %s: %v\n", url, err)// Вывод сообщения об ошибке получения HTML и возврат из функции
 		return
 	}
 
@@ -120,7 +120,7 @@ func processURL(url string, wg *sync.WaitGroup, i int, outputDir string) {
 
 	_, err = file.Write(html)
 	if err != nil {
-		fmt.Printf("Ошибка записи HTML %s: %v\n", url, err)// Вывод сообщения об ошибке записи HTML и возврат из функции
+		fmt.Printf("ошибка записи HTML %s: %v\n", url, err)// Вывод сообщения об ошибке записи HTML и возврат из функции
 	}
 	fmt.Printf("Горутина для %s завершена\n", url)
 }
